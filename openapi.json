@@ -1,0 +1,651 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Arbitrage Services API",
+        "version": "2.0.0",
+        "description": "Эти запросы по API используются сайтом arbitrage-services.com"
+    },
+    "servers": [
+        {
+            "url": "https://arbitrageservices-api-2.com",
+            "description": "Главный сервер, принимающий запросы"
+        }
+    ],
+    "paths": {
+        "/login": {
+            "post": {
+                "tags": [
+                    "Авторизация"
+                ],
+                "summary": "Получение токенов пользователя",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "example@gmail.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "example"
+                                    }
+                                },
+                                "required": [
+                                    "email",
+                                    "password"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Успешная авторизация. Насчет действия токенов пока нет информации.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "access_token": {
+                                            "type": "string",
+                                        },
+                                        "refresh_token": {
+                                            "type": "string",
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v2/info": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Получение актуальных установленных фильтров пользователя",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Succefully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "exchanges": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            },
+                                            "example": [
+                                                "binance",
+                                                "bybit",
+                                                "mexc",
+                                                "okx",
+                                                "bitget",
+                                                "kucoin"
+                                            ]
+                                        },
+                                        "spot_exchanges": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            },
+                                            "example": [
+                                                "binance",
+                                                "bybit",
+                                                "mexc",
+                                                "okx",
+                                                "kucoin"
+                                            ]
+                                        },
+                                        "margin_exchanges": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string",
+                                                "example": [
+                                                    "binance",
+                                                    "okx",
+                                                    "bitget",
+                                                    "kucoin",
+                                                    "gateio",
+                                                    "huobi",
+                                                    "coinex"
+                                                ]
+                                            }
+                                        },
+                                        "blacklist": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            },
+                                            "example": [
+                                                "ACAUSDT"
+                                            ]
+                                        },
+                                        "current_spread": {
+                                            "type": "string",
+                                            "example": "0.01"
+                                        },
+                                        "different_periods": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "monitoring": {
+                                            "type": "integer",
+                                            "example": 0
+                                        },
+                                        "oneday_spread": {
+                                            "type": "string",
+                                            "example": "0"
+                                        },
+                                        "volume": {
+                                            "type": "integer",
+                                            "example": 5000
+                                        },
+                                        "onemonth_spread": {
+                                            "type": "string",
+                                            "example": "0"
+                                        },
+                                        "oneweek_spread": {
+                                            "type": "string",
+                                            "example": "0"
+                                        },
+                                        "threeday_spread": {
+                                            "type": "string",
+                                            "example": "0"
+                                        },
+                                        "threemonth_spread": {
+                                            "type": "string",
+                                            "example": "0"
+                                        },
+                                        "twoweek_spread": {
+                                            "type": "string",
+                                            "example": "0"
+                                        },
+                                        "spread": {
+                                            "type": "string",
+                                            "example": "0.01"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/futures/v2/info": {
+            "post": {
+                "tags": [
+                    "Futures"
+                ],
+                "summary": "Установить новый комплект фильтров пользователю",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "exchanges": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        },
+                                        "example": [
+                                            "binance",
+                                            "bybit",
+                                            "mexc",
+                                            "okx",
+                                            "bitget",
+                                            "kucoin"
+                                        ]
+                                    },
+                                    "spot_exchanges": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        },
+                                        "example": [
+                                            "binance",
+                                            "bybit",
+                                            "mexc",
+                                            "okx",
+                                            "kucoin"
+                                        ]
+                                    },
+                                    "margin_exchanges": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        },
+                                        "example": [
+                                            "binance",
+                                            "okx",
+                                            "bitget",
+                                            "kucoin",
+                                            "gateio",
+                                            "huobi",
+                                            "coinex"
+                                        ]
+                                    },
+                                    "blacklist": {
+                                        "type": "array",
+                                        "description": "Список нельзя устанавливать как null, сайт не обрабатывает NPE\n",
+                                        "items": {
+                                            "type": "string"
+                                        },
+                                        "example": [
+                                            "ACAUSDT"
+                                        ]
+                                    },
+                                    "current_spread": {
+                                        "type": "string",
+                                        "example": "0.01"
+                                    },
+                                    "different_periods": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "monitoring": {
+                                        "type": "integer",
+                                        "description": "Всегда ставить 0 (нет в фильтрах)\n",
+                                        "example": 0
+                                    },
+                                    "oneday_spread": {
+                                        "type": "string",
+                                        "description": "Всегда ставить 0 (нет в фильтрах)\n",
+                                        "example": "0"
+                                    },
+                                    "volume": {
+                                        "type": "integer",
+                                        "description": "Доступные значения: 0, 100, 300, 500, 1000, 5000, 1000\n",
+                                        "example": 5000
+                                    },
+                                    "onemonth_spread": {
+                                        "type": "string",
+                                        "description": "Всегда ставить 0 (нет в фильтрах)\n",
+                                        "example": "0"
+                                    },
+                                    "oneweek_spread": {
+                                        "type": "string",
+                                        "description": "Всегда ставить 0 (нет в фильтрах)\n",
+                                        "example": "0"
+                                    },
+                                    "threeday_spread": {
+                                        "type": "string",
+                                        "description": "Всегда ставить 0 (нет в фильтрах)\n",
+                                        "example": "0"
+                                    },
+                                    "threemonth_spread": {
+                                        "type": "string",
+                                        "description": "Всегда ставить 0 (нет в фильтрах)\n",
+                                        "example": "0"
+                                    },
+                                    "twoweek_spread": {
+                                        "type": "string",
+                                        "description": "Всегда ставить 0 (нет в фильтрах)\n",
+                                        "example": "0"
+                                    },
+                                    "spread": {
+                                        "type": "string",
+                                        "example": "0.01"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Новые фильтры установлены успешно",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "required": [
+                                        "message"
+                                    ],
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Success"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/futures/v2/list": {
+            "get": {
+                "tags": [
+                    "Futures"
+                ],
+                "summary": "Получить список ордеров доступным по фильтрам пользователя",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "sorting_field",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "current_spread"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    },
+                    {
+                        "name": "type",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Succefully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "details": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "object",
+                                                            "properties": {
+                                                                "c": {
+                                                                    "type": "string",
+                                                                    "example": "AKTUSDT"
+                                                                },
+                                                                "c_s": {
+                                                                    "type": "number",
+                                                                    "example": 0.02
+                                                                },
+                                                                "coin_icon": {
+                                                                    "type": "string",
+                                                                    "example": "https://arbitrage-services-static.org/icons?monet=AKT"
+                                                                },
+                                                                "id": {
+                                                                    "type": "integer",
+                                                                    "example": 8
+                                                                },
+                                                                "l": {
+                                                                    "type": "string",
+                                                                    "example": "kucoin"
+                                                                },
+                                                                "l_c": {
+                                                                    "type": "number",
+                                                                    "example": 0.1
+                                                                },
+                                                                "l_c_f": {
+                                                                    "type": "string",
+                                                                    "example": "-"
+                                                                },
+                                                                "link": {
+                                                                    "type": "string",
+                                                                    "example": "https://graphs.arbitrage-services.com/?type=spot&long=kucoin&short=bitget&coin=AKTUSDT&token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNDYyODY5MTY2IiwiZXhwaXJlc19hdCI6MTc0Nzk3NDQwMywiaWF0IjoxNzQ3ODg4MDAzfQ.RaNxANnYIBOa0LJFktw1n6l38oTNEZXTEPqyPn7Gc9M"
+                                                                },
+                                                                "long_kurs": {
+                                                                    "type": "number",
+                                                                    "example": 1.54
+                                                                },
+                                                                "long_link": {
+                                                                    "type": "string",
+                                                                    "example": "https://www.kucoin.com/trade/AKT-USDT"
+                                                                },
+                                                                "m_i_s": {
+                                                                    "type": "string",
+                                                                    "example": "0.14"
+                                                                },
+                                                                "s": {
+                                                                    "type": "string",
+                                                                    "example": "bitget"
+                                                                },
+                                                                "s_c": {
+                                                                    "type": "number",
+                                                                    "example": 0.06
+                                                                },
+                                                                "s_c_f": {
+                                                                    "type": "number",
+                                                                    "example": 0.02
+                                                                },
+                                                                "short_kurs": {
+                                                                    "type": "number",
+                                                                    "example": 1.5460699
+                                                                },
+                                                                "short_link": {
+                                                                    "type": "string",
+                                                                    "example": "https://www.bitget.com/futures/usdt/AKTUSDT_UMCBL"
+                                                                },
+                                                                "spread": {
+                                                                    "type": "number",
+                                                                    "example": 0.39
+                                                                }
+                                                            }
+                                                        }
+                                                    },
+                                                    "pair": {
+                                                        "type": "string",
+                                                        "example": "AKTUSDT"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "last_page": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "page": {
+                                            "type": "integer",
+                                            "example": 1
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/general/markets": {
+            "get": {
+                "tags": [
+                    "General"
+                ],
+                "summary": "Получить доступные маркеты (маркеты которые парсит сайт)",
+                "responses": {
+                    "200": {
+                        "description": "Успешное получения",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "markets": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "market": {
+                                                        "type": "string",
+                                                        "description": "Код маркета (используется в кнопках HTML)",
+                                                        "example": "binance"
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "description": "Отображаемое имя",
+                                                        "example": "Binance"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "example": {
+                                        "markets": [
+                                            {
+                                                "market": "binance",
+                                                "name": "Binance"
+                                            },
+                                            {
+                                                "market": "gateio",
+                                                "name": "Gate.io"
+                                            },
+                                            {
+                                                "market": "mexc",
+                                                "name": "MEXC"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/futures/v2/blacklist": {
+            "get": {
+                "tags": [
+                    "Futures"
+                ],
+                "summary": "Получить коины которые можно добавить в черный список (в фильтрах)",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Succefully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string",
+                                        "example": "$AIUSDT"
+                                    },
+                                    "example": [
+                                        "$AIUSDT",
+                                        "1DOLLARUSDT",
+                                        "1INCHUSDT",
+                                        "1MBABYDOGEUSDT",
+                                        "A8USDT",
+                                        "AAVEUSDT",
+                                        "ACAUSDT"
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        },
+        "headers": {
+            "CommonHeaders": {
+                "description": "Дефолтные заголовки",
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "Accept": {
+                            "type": "string",
+                            "example": "*/*"
+                        },
+                        "Accept-Language": {
+                            "type": "string",
+                            "example": "ru,en;q=0.9"
+                        },
+                        "Connection": {
+                            "type": "string",
+                            "example": "keep-alive"
+                        },
+                        "Origin": {
+                            "type": "string",
+                            "example": "https://arbitrage-services.com"
+                        },
+                        "Referer": {
+                            "type": "string",
+                            "example": "https://arbitrage-services.com/"
+                        },
+                        "Sec-Fetch-Dest": {
+                            "type": "string",
+                            "example": "empty"
+                        },
+                        "Sec-Fetch-Mode": {
+                            "type": "string",
+                            "example": "cors"
+                        },
+                        "Sec-Fetch-Site": {
+                            "type": "string",
+                            "example": "cross-site"
+                        },
+                        "User-Agent": {
+                            "type": "string",
+                            "example": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 YaBrowser/25.4.0.0 Safari/537.36"
+                        },
+                        "sec-ch-ua": {
+                            "type": "string",
+                            "example": "\"Chromium\";v=\"134\", \"Not:A-Brand\";v=\"24\", \"YaBrowser\";v=\"25.4\", \"Yowser\";v=\"2.5\""
+                        },
+                        "sec-ch-ua-mobile": {
+                            "type": "string",
+                            "example": "?0"
+                        },
+                        "sec-ch-ua-platform": {
+                            "type": "string",
+                            "example": "\"Windows\""
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
