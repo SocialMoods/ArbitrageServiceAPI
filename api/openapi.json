@@ -28,7 +28,7 @@
           "User Management"
         ],
         "summary": "Обновление учетных данных",
-        "description": "Обновляет учетные данные текущего пользователя",
+        "description": "Обновляет учетные данные текущего пользователя (deprecated)",
         "operationId": "updateCreds",
         "requestBody": {
           "content": {
@@ -56,7 +56,7 @@
           "User Management"
         ],
         "summary": "Выход из системы",
-        "description": "Удаляет JWT-токен и завершает сессию пользователя",
+        "description": "Удаляет JWT-токен и завершает сессию пользователя + останавливает сканер",
         "operationId": "logout",
         "responses": {
           "200": {
@@ -190,7 +190,7 @@
           "Scanner API"
         ],
         "summary": "Запуск сканирования",
-        "description": "Запускает сканирование для пользователя на основе фильтра",
+        "description": "Запускает сканирование для пользователя на основе фильтра (если фильтр null то запустится скан для всех доступных монет)",
         "operationId": "startScan",
         "requestBody": {
           "content": {
