@@ -199,8 +199,7 @@
                 "$ref": "#/components/schemas/FilterDTO"
               }
             }
-          },
-          "required": true
+          }
         },
         "responses": {
           "401": {
@@ -427,8 +426,7 @@
               "type": "string"
             }
           }
-        },
-        "description": "Фильтр для сканирования"
+        }
       },
       "User": {
         "type": "object",
